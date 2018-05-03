@@ -29,10 +29,7 @@ app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.set('port', process.env.PORT || 80);
-
-app.use(express.static(path.join(__dirname, 'frontend'), { maxAge: 3600000 }));
-app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.set('port', process.env.PORT || 8000);
 
 app.use(session({ secret: 'your secret here',
 	resave:  true,
@@ -54,5 +51,5 @@ app.use(function(err, req, res, next) {
 
 // Start server
 var server = app.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'));
+	console.log('Express server listening ');
 });

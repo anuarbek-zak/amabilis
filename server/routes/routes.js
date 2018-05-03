@@ -1,4 +1,5 @@
 var express = require('express');
+var crypto = require('crypto')
 var router = express.Router();
 var User = require('../models/User');
 var Contacts = require('../models/Contacts');
@@ -8,9 +9,19 @@ var productCtrl = require('../controllers/productCtrl');
 var articleCtrl = require('../controllers/articleCtrl');
 var actionCtrl = require('../controllers/actionCtrl');
 var contactsCtrl = require('../controllers/contactsCtrl');
-var multer = require('multer');
-var upload = multer({dest:"frontend/assets/img/products"});
-
+const multer = require('multer')
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'frontend/assets/img/products')
+  },
+  filename: function (req, file, cb) {
+  	var arr = file.originalname.split('.')
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      cb(null, raw.toString('hex') + Date.now() + '.' + arr[arr.length-1]);
+    });
+  }
+});
+var upload = multer({ storage: storage });
 
 router.get('/api/users',function (req,res) {
     User.find({}).exes(function (err,users) {
