@@ -10,12 +10,7 @@ var User  = require('./server/models/User');
 var app = express();
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
-// var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-// if(env === 'development'){
-	mongoose.connect('mongodb://localhost:27017/amabiliskz');
-// }else {
-// 	mongoose.connect('mongodb://Anuarbek:14nur97@ds157248.mlab.com:57248/mydb');
-// }
+mongoose.connect('mongodb://localhost:27017/amabiliskz');
 
 
 // Middlewares
@@ -31,6 +26,9 @@ app.use(bodyParser.json());
 
 app.set('port', process.env.PORT || 8000);
 
+app.use(express.static(path.join(__dirname, 'frontend'), { maxAge: 3600000 }));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+
 app.use(session({ secret: 'your secret here',
 	resave:  true,
 	saveUninitialized: true,
@@ -41,7 +39,6 @@ app.use(session({ secret: 'your secret here',
 
 var routes = require('./server/routes/routes');	
 app.use('/',routes);
-console.log('new back')
 var users = [];
 
 app.use(function(err, req, res, next) {
@@ -51,5 +48,5 @@ app.use(function(err, req, res, next) {
 
 // Start server
 var server = app.listen(app.get('port'), function() {
-	console.log('Express server listening ');
+	console.log('Express server listening on port ' + app.get('port'));
 });
