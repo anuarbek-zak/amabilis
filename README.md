@@ -1,4 +1,4 @@
-It's my MEAN poduction project. I've implemented simple internet show with products, categories, admin panel and sending email to admin when products were ordered.
+It's my first commercial MEAN  project. I've implemented simple internet show with products, categories, admin panel and sending email to admin when products were ordered.
 #
 I used Node.js (Express, Multer, Nodemailer), MongoDB (Mongoose), Angular 1+ in this project.
 #
